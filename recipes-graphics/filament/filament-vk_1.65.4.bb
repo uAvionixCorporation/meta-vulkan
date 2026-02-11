@@ -23,15 +23,17 @@ DEPENDS:class-target += "\
 
 REQUIRED_DISTRO_FEATURES:class-target = "vulkan"
 
+RUNTIME:class-native = "llvm"
+TOOLCHAIN:class-native = "clang"
+PREFERRED_PROVIDER_libgcc:class-native = "compiler-rt"
+LIBCPLUSPLUS:class-native = "-stdlib=libc++"
 
-TOOLCHAIN = "clang"
-TOOLCHAIN_NATIVE = "clang"
-TC_CXX_RUNTIME = "llvm"
-PREFERRED_PROVIDER_llvm = "clang"
-PREFERRED_PROVIDER_llvm-native = "clang-native"
-PREFERRED_PROVIDER_libgcc = "compiler-rt"
-LIBCPLUSPLUS = "-stdlib=libc++"
+RUNTIME:class-target = "llvm"
+TOOLCHAIN:class-target = "clang"
+PREFERRED_PROVIDER_libgcc:class-target = "compiler-rt"
+LIBCPLUSPLUS:class-target = "-stdlib=libc++"
 
+S = "${UNPACKDIR}/git"
 
 SRCREV = "v1.65.4"
 

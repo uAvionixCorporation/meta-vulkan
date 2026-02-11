@@ -16,14 +16,20 @@ SRC_URI = "git://github.com/assimp/assimp.git;protocol=https;lfs=1;branch=master
 
 SRCREV = "fb375dd8c0a032106a2122815fb18dffe0283721"
 
-TOOLCHAIN = "clang"
-TOOLCHAIN_NATIVE = "clang"
-TC_CXX_RUNTIME = "llvm"
-PREFERRED_PROVIDER_llvm = "clang"
-PREFERRED_PROVIDER_llvm-native = "clang-native"
-PREFERRED_PROVIDER_libgcc = "compiler-rt"
+RUNTIME:class-native = "llvm"
+TOOLCHAIN:class-native = "clang"
+PREFERRED_PROVIDER_libgcc:class-native = "compiler-rt"
+LIBCPLUSPLUS:class-native = "-stdlib=libc++"
+PREFERRED_PROVIDER_llvm:class-native = "clang"
+
+RUNTIME:class-target = "llvm"
+TOOLCHAIN:class-target = "clang"
+PREFERRED_PROVIDER_libgcc:class-target = "compiler-rt"
+LIBCPLUSPLUS:class-target = "-stdlib=libc++"
+PREFERRED_PROVIDER_llvm:class-target = "clang"
 PREFERRED_PROVIDER_libgomp = "openmp"
-LIBCPLUSPLUS = "-stdlib=libc++"
+
+S = "${UNPACKDIR}/git"
 
 inherit cmake
 
