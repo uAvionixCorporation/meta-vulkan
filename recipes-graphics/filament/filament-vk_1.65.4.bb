@@ -19,6 +19,8 @@ DEPENDS:class-target += "\
     filament-vk-native \
     vulkan-loader \
     vulkan-validation-layers \
+    libxkbcommon \
+    virtual/egl \
     "
 
 REQUIRED_DISTRO_FEATURES:class-target = "vulkan"
@@ -48,6 +50,7 @@ SRC_URI = "\
     file://0001-enable-buffer-cache-and-staging-allocation-debug.patch \
     file://0001-supress-character-conversion-warnings.patch \
     file://0001-dump-vma-stats.patch \
+    file://0007-enable-host-targets-and-fix-getopt.patch \
     file://ImportExecutables-Release.cmake \
     file://ImportExecutables-Debug.cmake \
 "
@@ -85,8 +88,8 @@ EXTRA_OECMAKE:class-target += " \
     -D CMAKE_BUILD_WITH_INSTALL_RPATH=ON \
     -D FILAMENT_LINUX_IS_MOBILE=ON \
     -D FILAMENT_BUILD_FILAMAT=ON \
-    -D FILAMENT_SKIP_SAMPLES=ON \
-    -D FILAMENT_SKIP_SDL2=ON \
+    -D FILAMENT_SKIP_SAMPLES=OFF \
+    -D FILAMENT_SKIP_SDL2=OFF \
     -D FILAMENT_USE_SWIFTSHADER=OFF \
     -D DIST_ARCH=${BUILD_ARCH} \
     -D IMPORT_EXECUTABLES_DIR=. \
@@ -179,5 +182,7 @@ INSANE_SKIP:${PN}-staticdev = "buildpaths"
 FILES:${PN}-dev = "${includedir}"
 
 FILES:${PN}-host-tools = "${datadir}"
+
+FILES:${PN}-doc += "/usr/docs/*.md"
 
 BBCLASSEXTEND += "native nativesdk"

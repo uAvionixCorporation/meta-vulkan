@@ -1,0 +1,61 @@
+From 9dd23998492b0818e5e1b3272c4d529de1f19feb Mon Sep 17 00:00:00 2001
+From: Kyle Sulek <kyle.sulek@uavionix.com>
+Date: Thu, 12 Feb 2026 10:23:17 -0600
+Subject: [PATCH] enable host targets and fix getopt
+
+Upstream-Status: Inappropriate
+
+Signed-off-by: Kyle Sulek <kyle.sulek@uavionix.com>
+---
+ CMakeLists.txt                             |  4 ++--
+ third_party/getopt/include/getopt/getopt.h | 11 +++++++++++
+ 2 files changed, 13 insertions(+), 2 deletions(-)
+ mode change 100644 => 100755 CMakeLists.txt
+ mode change 100644 => 100755 third_party/getopt/include/getopt/getopt.h
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+old mode 100644
+new mode 100755
+index 015fb9e77..f20a0c031
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -191,9 +191,9 @@ if (ANDROID)
+     add_definitions(-D__ANDROID_UNAVAILABLE_SYMBOLS_ARE_WEAK__)
+ endif()
+ 
+-if (NOT ANDROID AND NOT WEBGL AND NOT IOS AND NOT FILAMENT_LINUX_IS_MOBILE)
++#if (NOT ANDROID AND NOT WEBGL AND NOT IOS AND NOT FILAMENT_LINUX_IS_MOBILE)
+     set(IS_HOST_PLATFORM TRUE)
+-endif()
++#endif()
+ 
+ if (APPLE)
+     if (FILAMENT_SUPPORTS_OSMESA)
+diff --git a/third_party/getopt/include/getopt/getopt.h b/third_party/getopt/include/getopt/getopt.h
+old mode 100644
+new mode 100755
+index c1d0df928..ae2405508
+--- a/third_party/getopt/include/getopt/getopt.h
++++ b/third_party/getopt/include/getopt/getopt.h
+@@ -1,3 +1,8 @@
++#ifndef GETOPT_H_FILAMENT_WRAPPER
++#define GETOPT_H_FILAMENT_WRAPPER
++
++#if !defined(__linux__) && !defined(__GLIBC__)
++
+ #ifndef _GETOPT_H
+ #define _GETOPT_H
+ 
+@@ -29,3 +34,9 @@ int getopt_long_only(int, char *const *, const char *, const struct option *, in
+ #endif
+ 
+ #endif
++
++#else
++#include <getopt.h>
++#endif
++
++#endif
+-- 
+2.43.0
+
